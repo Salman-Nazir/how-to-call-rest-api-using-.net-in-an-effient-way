@@ -35,7 +35,7 @@ namespace APIClientForEconomic
         // Call to get a customer from economic api via economic id 
         public async Task<EconomicCustomer> GetEconomicCustomer(int economicId)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync($"customers/{economicId}?demo=true");
+            HttpResponseMessage response = await _httpClient.GetAsync($"customers/{economicId}");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -46,7 +46,7 @@ namespace APIClientForEconomic
         // Call to get contacts of a customer from economic api via economic id 
         public async Task<List<Contact>> GetContacts(int economicId)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync($"customers/{economicId}/contacts?demo=true");
+            HttpResponseMessage response = await _httpClient.GetAsync($"customers/{economicId}/contacts");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -57,7 +57,7 @@ namespace APIClientForEconomic
         // Call to get invoices of a customer from economic api via economic id 
         public async Task<List<InvoiceBooked>> GetBookedInvoices(int economicId)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync($"customers/{economicId}/invoices/booked?skippages=0&pagesize=1000&demo=true");
+            HttpResponseMessage response = await _httpClient.GetAsync($"customers/{economicId}/invoices/booked?skippages=0&pagesize=1000");
 
             if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
@@ -74,7 +74,7 @@ namespace APIClientForEconomic
         // Call to get enteries for invoices with respect to year for a customer from economic api via year and customer number 
         public async Task<List<AccountEntry>> GetAccountEntries(int year, int customerNumber)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync($"accounting-years/{year}/entries??demo=true&skippages=0&pagesize=1000&filter=customer.customerNumber$eq:{customerNumber}$and:entryType$ne:systemEntry&sort=date");
+            HttpResponseMessage response = await _httpClient.GetAsync($"accounting-years/{year}/entries?skippages=0&pagesize=1000&filter=customer.customerNumber$eq:{customerNumber}$and:entryType$ne:systemEntry&sort=date");
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
                 return new List<AccountEntry>();
@@ -90,7 +90,7 @@ namespace APIClientForEconomic
         // Call to get pdf of a invoice for a customer from economic api via booked invoiced number
         public async Task<Stream> GetPDFforInvoice(int bookedInvoiceNumber)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync($"invoices/booked/{bookedInvoiceNumber}?demo=true");
+            HttpResponseMessage response = await _httpClient.GetAsync($"invoices/booked/{bookedInvoiceNumber}");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -103,7 +103,7 @@ namespace APIClientForEconomic
         // Call to get customer group of a customer from economic api via customer group number
         public async Task<CustomerGroup> GetCustomerGroupName(int customerGroupNumber)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync($"customer-groups/{customerGroupNumber}?demo=true");
+            HttpResponseMessage response = await _httpClient.GetAsync($"customer-groups/{customerGroupNumber}");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
